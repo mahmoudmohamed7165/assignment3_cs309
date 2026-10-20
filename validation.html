@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #5f0e0e;
+            padding: 30px;
+        }
+        .box {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error {
+            color: #d9534f;
+            font-size: 0.85rem;
+            margin-top: 3px;
+            display: block;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #0275d8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #025aa5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Create Account</h2>
+        <form id="myform">
+            <div class="field">
+                <label>Name:</label>
+                <input type="text" id="username">
+                <span class="error" id="nameErr"></span>
+            </div>
+
+            <div class="field">
+                <label>Email:</label>
+                <input type="text" id="email">
+                <span class="error" id="emailErr"></span>
+            </div>
+
+            <div class="field">
+                <label>Password:</label>
+                <input type="password" id="password">
+                <span class="error" id="passErr"></span>
+            </div>
+
+            <div class="field">
+                <label>Confirm Password:</label>
+                <input type="password" id="confirmPassword">
+                <span class="error" id="confirmPassErr"></span>
+            </div>
+
+            <div class="field">
+                <label>Age:</label>
+                <input type="number" id="age">
+                <span class="error" id="ageErr"></span>
+            </div>
+
+            <button type="submit" class="btn-submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        
+        document.getElementById('myform').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            let isValid = true;
+
+            let name = document.getElementById('username').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let password = document.getElementById('password').value;
+            let confirmPass = document.getElementById('confirmPassword').value;
+            let age = document.getElementById('age').value;
+
+            
+            if (name === "") {
+                document.getElementById('nameErr').innerText = "Name is required.";
+                isValid = false;
+            } else {
+                document.getElementById('nameErr').innerText = "";
+            }
+
+            
+            if (!email.includes("@") || !email.includes(".")) {
+                document.getElementById('emailErr').innerText = "Enter a valid email.";
+                isValid = false;
+            } else {
+                document.getElementById('emailErr').innerText = "";
+            }
+            if (password.length < 8) {
+                document.getElementById('passErr').innerText = "Password must be at least 8 characters.";
+                isValid = false;
+            } else {
+                document.getElementById('passErr').innerText = "";
+            }
+            if (password !== confirmPass || confirmPass === "") {
+                document.getElementById('confirmPassErr').innerText = "Passwords do not match.";
+                isValid = false;
+            } else {
+                document.getElementById('confirmPassErr').innerText = "";
+            }
+            if (age === "" || age <= 0) {
+                document.getElementById('ageErr').innerText = "Please enter a valid age.";
+                isValid = false;
+            } else {
+                document.getElementById('ageErr').innerText = "";
+            }
+            if (isValid) {
+                alert("Success! Form submitted.");
+                document.getElementById('myform').reset();
+            }
+        });
+    </script>
+</body>
+</html>

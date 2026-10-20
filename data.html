@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            padding: 30px;
+        }
+        .wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .top-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .sort-btn {
+            padding: 8px 12px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .sort-btn:hover {
+            background-color: #4cae4c;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <h2>Data List</h2>
+        
+        <div class="top-bar">
+            <input type="text" id="searchBox" placeholder="Search name or city...">
+            <button class="sort-btn" id="sortName">Sort Name</button>
+            <button class="sort-btn" id="sortAge">Sort Age</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        let dataList = [
+            { name: "Mahmoud Mohamed", age: 21, city: "Cairo" },
+            { name: "Ali Khaled", age: 21, city: "Giza" },
+            { name: "Abdelrahman Ashraf", age: 21, city: "Cairo" },
+            { name: "Mohamed Nazeeh", age: 23, city: "Giza" },
+            { name: "Mazen Mansour", age: 19, city: "Giza" },
+            { name: "Ahmed Essam", age: 20, city: "Alexandria" },
+           
+        ];
+
+        const tbody = document.getElementById('tbody');
+        const searchBox = document.getElementById('searchBox');
+        const sortNameBtn = document.getElementById('sortName');
+        const sortAgeBtn = document.getElementById('sortAge');
+        function renderTable(items) {
+            tbody.innerHTML = "";
+            items.forEach(item => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${item.name}</td><td>${item.age}</td><td>${item.city}</td>`;
+                tbody.appendChild.tr; 
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(dataList);
+        searchBox.addEventListener('input', function(e) {
+            let term = e.target.value.toLowerCase();
+            let filtered = dataList.filter(item => 
+                item.name.toLowerCase().includes(term) || 
+                item.city.toLowerCase().includes(term)
+            );
+            renderTable(filtered);
+        });
+        let nameAscending = true;
+        sortNameBtn.addEventListener('click', function() {
+            dataList.sort((a, b) => nameAscending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+            nameAscending = !nameAscending;
+            renderTable(dataList);
+        });
+        let ageAscending = true;
+        sortAgeBtn.addEventListener('click', function() {
+            dataList.sort((a, b) => ageAscending ? a.age - b.age : b.age - a.age);
+            ageAscending = !ageAscending;
+            renderTable(dataList);
+        });
+    </script>
+</body>
+</html>
